@@ -12,9 +12,7 @@ $sql="select * from hrm_info.user_login where user_id='$user_id' and `password`=
 $result=mysqli_query($con,$sql) or die(mysqli_error()());
 if(mysql_num_rows($result)<1)
 {
-
 	header('Location:logout.php');
-
 }
 */
 ?>
@@ -66,24 +64,24 @@ if(mysql_num_rows($result)<1)
                         <th style="text-align:center">Buyer</th>
                         <th style="text-align:center">Events</th>
                         <th style="text-align:center">Delivary Date</th>
-<!--                        <th style="text-align:center">Day Remain</th>-->
-                        <!--                        <th>Action</th>-->
+                        <!--                        <th style="text-align:center">Day Remain</th>-->
+                                                <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     $s1 = 1;
                     //                    $sql_for_user_list = "SELECT * FROM user_login";
-//                    $sql_for_user_list = "SELECT order_id,o.buyer_id,b.buyer_name,bp.multi_events,
-//o.gd_creation_date,o.buyer_delivery_date,o.buyer_profile_id,bp.day_before_delivary,
-//(select event_name from event_info where event_id in(bp.multi_events)) event_name
-//FROM orders o
-//JOIN
-//    buyer_profile bp ON o.buyer_profile_id = bp.buyer_profile_id
-//JOIN
-//    event_wise_buyer ewu ON bp.buyer_id = ewu.buyer_id
-//JOIN
-//    buyer b ON b.buyer_id = bp.buyer_id";
+                    //                    $sql_for_user_list = "SELECT order_id,o.buyer_id,b.buyer_name,bp.multi_events,
+                    //o.gd_creation_date,o.buyer_delivery_date,o.buyer_profile_id,bp.day_before_delivary,
+                    //(select event_name from event_info where event_id in(bp.multi_events)) event_name
+                    //FROM orders o
+                    //JOIN
+                    //    buyer_profile bp ON o.buyer_profile_id = bp.buyer_profile_id
+                    //JOIN
+                    //    event_wise_buyer ewu ON bp.buyer_id = ewu.buyer_id
+                    //JOIN
+                    //    buyer b ON b.buyer_id = bp.buyer_id";
 
                     $sql_for_user_list = "SELECT order_id,o.buyer_id,b.buyer_name,bp.multi_events,
 o.gd_creation_date,o.buyer_delivery_date,o.buyer_profile_id,bp.day_before_delivary
@@ -93,13 +91,11 @@ JOIN
 JOIN
     buyer b ON b.buyer_id = bp.buyer_id";
 
-
                     $res_for_user_list = mysqli_query($con, $sql_for_user_list);
 
                     while ($row = mysqli_fetch_assoc($res_for_user_list))
                     {
                     ?>
-
                     <tr>
                         <td><?php echo $s1; ?></td>
                         <td><?php echo $row['order_id']; ?></td>
@@ -119,22 +115,21 @@ JOIN
                                 echo "$event_name<br>";
 //                                echo "$total_day<br>";
                             }
-//                            $gd_creation_date = date('d', strtotime($row['gd_creation_date']));
-//                            echo $gd_creation_date;
+                            //                            $gd_creation_date = date('d', strtotime($row['gd_creation_date']));
+                            //                            echo $gd_creation_date;
                             ?>
-                        </td>
-
+<!--                        </td>-->
                         <td>
                             <?php
                             $gd_creation_date = date('d', strtotime($row['buyer_delivery_date']));
                             $gd_creation_month = date('m', strtotime($row['buyer_delivery_date']));
                             $gd_creation_year = date('y', strtotime($row['buyer_delivery_date']));
                             $gd_creation_date_int = intval($gd_creation_date);
-//                            echo $gd_creation_date;
-//                            exit();
+                            //                            echo $gd_creation_date;
+                            //                            exit();
                             $day_before_delivery = $row['day_before_delivary'];
                             $day_before_delivery = explode(",", $day_before_delivery);
-                            foreach ($day_before_delivery as $days){
+                            foreach ($day_before_delivery as $days) {
 //                                echo "$days<br>";
 //                             $total_day_remain = $gd_creation_date_int - $days;
                                 // Assuming $gd_creation_date_int and $days are already defined and have numeric values or set to 0.
@@ -153,19 +148,18 @@ JOIN
 //                             $today = date('j');
 //                             echo isset($total_day_remain)?$total_day_remain:0;
 //                             echo $total_day_remain.'<br>';
-                             echo $total_day_remain.'-'.$gd_creation_month.'-'.$gd_creation_year.'<br>';
+                                echo $total_day_remain . '-' . $gd_creation_month . '-' . $gd_creation_year . '<br>';
                             }
-//                            exit();
+                            //                            exit();
                             ?>
                         </td>
+<!--                        </td>-->
+                          <td>
+                            <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/approve.php?order_id=<?php
+                        ?>')"> Approve </button>
+<!--                            <button type="submit" id="" name="" class="btn btn-danger btn-xs" onclick="load_page('user/user_deleting.php?user_id=<?php
+/*                        */?>')"> Delete </button>-->
                         </td>
-
-                        <!--                        <td>
-                            <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/edit_user.php?user_id=<?php /*echo $row['user_id']*/
-                        ?>')"> Edit </button>
-                            <button type="submit" id="" name="" class="btn btn-danger btn-xs" onclick="load_page('user/user_deleting.php?user_id=<?php /*echo $row['user_id']*/
-                        ?>')"> Delete </button>
-                        </td>-->
                         <?php
 
                         $s1++;
