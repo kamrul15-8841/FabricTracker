@@ -39,7 +39,8 @@ $row=mysqli_fetch_assoc($result);
 					 		 </a>
 					 		 <ul class="treeview-menu">
 								 <li><a onClick="load_page('events/events.php')"><i class="fa fa-circle-o"></i>Events</a></li>
-					 		 </ul> <!-- End of <ul class="treeview-menu"> -->
+                                 <li><a onClick="load_page('events/eventsWiseBuyerAndGD.php')"><i class="fa fa-circle-o"></i>eventsWiseBuyerAndGD</a></li>
+                             </ul> <!-- End of <ul class="treeview-menu"> -->
 					  </li> <!-- End of <li class="treeview" id="main_product_menu"> -->
 
 					  <li class="treeview" id="main_product_menu">
