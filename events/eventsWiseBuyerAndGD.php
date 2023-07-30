@@ -66,8 +66,8 @@ if(mysql_num_rows($result)<1)
                         <th style="text-align:center">Buyer</th>
                         <th style="text-align:center">Events</th>
                         <th style="text-align:center">Delivary Date</th>
-<!--                        <th style="text-align:center">Day Remain</th>-->
-                                                <th>Action</th>
+                        <th style="text-align:center">Status</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -119,6 +119,7 @@ JOIN
                             ?>
                         </td>
 
+
                         <td>
                             <?php
                             $gd_creation_date = date('d', strtotime($row['buyer_delivery_date']));
@@ -154,6 +155,15 @@ JOIN
                             ?>
                         </td>
 <!--                        </td>-->
+                        <td>
+                            <?php
+                            if ('Approved' === 'Approved') {
+                                echo '<button type="submit" id="" name="" class="btn btn-primary btn-xs" disabled>Approved</button>';
+                            } else {
+                                echo '<button type="submit" id="" name="" class="btn btn-danger btn-xs" disabled>Cross</button>';
+                            }
+                            ?>
+                        </td>
                         <td>
                             <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/approve.php?order_id=<?php
                             ?>')"> Approve </button>
