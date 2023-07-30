@@ -67,7 +67,7 @@ if(mysql_num_rows($result)<1)
                         <th style="text-align:center">Events</th>
                         <th style="text-align:center">Delivary Date</th>
 <!--                        <th style="text-align:center">Day Remain</th>-->
-                        <!--                        <th>Action</th>-->
+                                                <th>Action</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,14 +92,10 @@ JOIN
     buyer_profile bp ON o.buyer_profile_id = bp.buyer_profile_id
 JOIN
     buyer b ON b.buyer_id = bp.buyer_id";
-
-
                     $res_for_user_list = mysqli_query($con, $sql_for_user_list);
-
                     while ($row = mysqli_fetch_assoc($res_for_user_list))
                     {
                     ?>
-
                     <tr>
                         <td><?php echo $s1; ?></td>
                         <td><?php echo $row['order_id']; ?></td>
@@ -107,7 +103,6 @@ JOIN
                         <td><?php echo $row['buyer_delivery_date']; ?></td>
                         <td><?php echo $row['buyer_name']; ?></td>
                         <td><?php
-
                             $multi_events = $row['multi_events'];
                             $query2 = "SELECT * from event_info where event_id IN ($multi_events)";
                             $res_for_query2 = mysqli_query($con, $query2);
@@ -158,8 +153,13 @@ JOIN
 //                            exit();
                             ?>
                         </td>
+<!--                        </td>-->
+                        <td>
+                            <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/approve.php?order_id=<?php
+                            ?>')"> Approve </button>
+                            <!--                            <button type="submit" id="" name="" class="btn btn-danger btn-xs" onclick="load_page('user/user_deleting.php?user_id=<?php
+                            /*                        */?>')"> Delete </button>-->
                         </td>
-
                         <!--                        <td>
                             <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/edit_user.php?user_id=<?php /*echo $row['user_id']*/
                         ?>')"> Edit </button>
