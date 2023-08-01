@@ -220,6 +220,24 @@ $obj->connection();
             </div>
 
 
+<!--            <div class="form-group form-group-sm" style="margin-bottom: 20px;">-->
+<!--                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fabric_finish">Day before Delivery<span class="required">*</span></label>-->
+<!--                <div class="col-md-5 col-sm-6 col-xs-12">-->
+<!--                    <select id="day_before_delivary" name="day_before_delivary[]"-->
+<!--                            class="form-control select2" multiple="multiple">-->
+<!--                        <option>Select Day before Delivery</option>-->
+<!--                        --><?php
+//                        $sql_event_day = "select total_day from `event_info` order by `event_id`";
+//                        $res_event_day = mysqli_query($con, $sql_event_day) or die(mysqli_error());
+//                        while ($row_event_day = mysqli_fetch_array($res_event_day)) {
+//                            echo "<option value='" . $row_event_day['event_id'] . "'>" . $row_event_day['total_day'] . "</option>";
+//                        }
+//                        ?>
+<!--                    </select>-->
+<!--                </div>-->
+<!--            </div>-->
+
+
             <div class="form-group form-group-sm" id="form-group_for_designation" style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="fabric_type"
                 style="margin-right:0px; color:#00008B;">Fabric Type</label>
@@ -326,8 +344,28 @@ $obj->connection();
                             tr[i].style.display = "";
                         } else {
                             tr[i].style.display = "none";
+                        }
+                    }
+                }
+            }
+            $(document).ready(function () {
+                //function to initialize select2
+                function initializeSelect2(selectElementObj) {
+                    selectElementObj.select2(
+                        {
+                            width: "100%",
+                            tags: true
+                        });
+                }
 
-       </script>
+                //onload: call the above function
+                $(".select2").each(function () {
+                    initializeSelect2($(this));
+                });
+            });
+
+
+        </script>
 
     </div>
 

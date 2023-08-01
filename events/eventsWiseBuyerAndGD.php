@@ -93,95 +93,85 @@ JOIN
 JOIN
     buyer b ON b.buyer_id = bp.buyer_id";
                     $res_for_user_list = mysqli_query($con, $sql_for_user_list);
-                    while ($row = mysqli_fetch_assoc($res_for_user_list))
-                    {
+                    while ($row = mysqli_fetch_assoc($res_for_user_list)) {
                     ?>
-                    <tr>
-                        <td><?php echo $s1; ?></td>
-                        <td><?php echo $row['order_id']; ?></td>
-                        <td><?php echo $row['gd_creation_date']; ?></td>
-                        <td><?php echo $row['buyer_delivery_date']; ?></td>
-                        <td><?php echo $row['buyer_name']; ?></td>
-                        <td><?php
-                            $multi_events = $row['multi_events'];
-                            $query2 = "SELECT * from event_info where event_id IN ($multi_events)";
-                            $res_for_query2 = mysqli_query($con, $query2);
-                            $rows = mysqli_fetch_all($res_for_query2, MYSQLI_ASSOC);
-                            // Loop through the rows
-                            foreach ($rows as $roww) {
-                                $event_name = $roww['event_name'];
-                                $total_day = $roww['total_day'];
-                                echo "$event_name<br>";
-//                                echo "$total_day<br>";
-                            }
-//                            $gd_creation_date = date('d', strtotime($row['gd_creation_date']));
-//                            echo $gd_creation_date;
-                            ?>
-                        </td>
 
-
-                        <td>
-                            <?php
-                            $gd_creation_date = date('d', strtotime($row['buyer_delivery_date']));
-                            $gd_creation_month = date('m', strtotime($row['buyer_delivery_date']));
-                            $gd_creation_year = date('y', strtotime($row['buyer_delivery_date']));
-                            $gd_creation_date_int = intval($gd_creation_date);
-//                            echo $gd_creation_date;
-//                            exit();
-                            $day_before_delivery = $row['day_before_delivary'];
-                            $day_before_delivery = explode(",", $day_before_delivery);
-                            foreach ($day_before_delivery as $days){
-//                                echo "$days<br>";
-//                             $total_day_remain = $gd_creation_date_int - $days;
-                                // Assuming $gd_creation_date_int and $days are already defined and have numeric values or set to 0.
-
-// Check if $gd_creation_date_int and $days are numeric, if not, set them to 0.
-                                $gd_creation_date_int = is_numeric($gd_creation_date_int) ? $gd_creation_date_int : 0;
-                                $days = is_numeric($days) ? $days : 0;
-
-// Perform the calculation and store the result in $total_day_remain.
-                                $total_day_remain = $gd_creation_date_int - $days;
-
-
-//                             $total_day_remain = (isset($gd_creation_date_int)?$gd_creation_date_int:0) - (isset($days)?$days:0);
-//                             $total_day_remain = (isset($gd_creation_date_int)?$gd_creation_date_int:0)-(isset($total_day_int)?$total_day_int:0);
-//                             echo isset($total_day_int)?$total_day_int:0;
-//                             $today = date('j');
-//                             echo isset($total_day_remain)?$total_day_remain:0;
-//                             echo $total_day_remain.'<br>';
-                             echo $total_day_remain.'-'.$gd_creation_month.'-'.$gd_creation_year.'<br>';
-                            }
-//                            exit();
-                            ?>
-                        </td>
-<!--                        </td>-->
-                        <td>
-                            <?php
-                            if ('Approved' === 'Approved') {
-                                echo '<button type="submit" id="" name="" class="btn btn-primary btn-xs" disabled>Approved</button>';
-                            } else {
-                                echo '<button type="submit" id="" name="" class="btn btn-danger btn-xs" disabled>Cross</button>';
-                            }
-                            ?>
-                        </td>
-                        <td>
-                            <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/approve.php?order_id=<?php
-                            ?>')"> Approve </button>
-                            <!--                            <button type="submit" id="" name="" class="btn btn-danger btn-xs" onclick="load_page('user/user_deleting.php?user_id=<?php
-                            /*                        */?>')"> Delete </button>-->
-                        </td>
-                        <!--                        <td>
-                            <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/edit_user.php?user_id=<?php /*echo $row['user_id']*/
-                        ?>')"> Edit </button>
-                            <button type="submit" id="" name="" class="btn btn-danger btn-xs" onclick="load_page('user/user_deleting.php?user_id=<?php /*echo $row['user_id']*/
-                        ?>')"> Delete </button>
-                        </td>-->
                         <?php
-
-                        $s1++;
+                        $gd_creation_date = date('d', strtotime($row['buyer_delivery_date']));
+                        $gd_creation_month = date('m', strtotime($row['buyer_delivery_date']));
+                        $gd_creation_year = date('y', strtotime($row['buyer_delivery_date']));
+                        $gd_creation_date_int = intval($gd_creation_date);
+                        $day_before_delivery = $row['day_before_delivary'];
+                        $day_before_delivery = explode(",", $day_before_delivery);
+                        foreach ($day_before_delivery as $days) {
+                            $gd_creation_date_int = is_numeric($gd_creation_date_int) ? $gd_creation_date_int : 0;
+                            $days = is_numeric($days) ? $days : 0;
+                            $total_day_remain = $gd_creation_date_int - $days;
                         }
                         ?>
+                        <?php
+                        $multi_events = $row['multi_events'];
+                        $query2 = "SELECT * from event_info where event_id IN ($multi_events)";
+                        $res_for_query2 = mysqli_query($con, $query2);
+                        $rows = mysqli_fetch_all($res_for_query2, MYSQLI_ASSOC);
+                        // Loop through the rows
+                        foreach ($rows as $roww) {
+                            $event_name = $roww['event_name'];
+                            ?>
+                         <tr>
+                            <td><?php echo $s1; ?></td>
+                            <td><?php echo $row['order_id']; ?></td>
+                            <td><?php echo $row['gd_creation_date']; ?></td>
+                            <td><?php echo $row['buyer_delivery_date']; ?></td>
+                            <td><?php echo $row['buyer_name']; ?></td>
+                            <td>
+                                <?php
+                                echo "$event_name<br>";
+                                ?>
+                            </td>
+
+                            <td>
+                                <?php
+                                echo $total_day_remain . '-' . $gd_creation_month . '-' . $gd_creation_year . '<br>';
+                                ?>
+                            </td>
+
+                            <td>
+                                <?php
+                                if ('Approved' === 'Approved') {
+                                    echo '<button type="submit" id="" name="" class="btn btn-primary btn-xs" disabled>Approved</button>';
+                                } else {
+                                    echo '<button type="submit" id="" name="" class="btn btn-danger btn-xs" disabled>Cross</button>';
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/approve.php?order_id=<?php
+                                echo $row['order_id']; // Echo the order_id as the value for the 'order_id' parameter in the URL
+                                ?>')"> Approve </button>
+                                <!--                            <button type="submit" id="" name="" class="btn btn-danger btn-xs" onclick="load_page('user/user_deleting.php?user_id=<?php
+                                /*                        */ ?>')"> Delete </button>-->
+                            </td>
+                            <!--                        <td>
+            <button type="submit" id="" name="" class="btn btn-primary btn-xs" onclick="load_page('user/edit_user.php?user_id=<?php /*echo $row['user_id']*/
+                            ?>')"> Edit </button>
+            <button type="submit" id="" name="" class="btn btn-danger btn-xs" onclick="load_page('user/user_deleting.php?user_id=<?php /*echo $row['user_id']*/
+                            ?>')"> Delete </button>
+        </td>-->
+
+                            <?php
+
+                            $s1++;
+
+                        }
+
+                        ?>
+                        <?php
+                    }
+                        ?>
+
                     </tr>
+
                     </tbody>
                 </table>
 
