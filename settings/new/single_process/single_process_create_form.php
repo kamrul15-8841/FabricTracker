@@ -50,20 +50,17 @@ $obj->connection();
                         $sql = 'select * from `buyer` order by `buyer_name`';
                         $result = mysqli_query($con, $sql) or die(mysqli_error());
                         while ($row = mysqli_fetch_array($result)) {
-
                            echo '<option value="' . $row['buyer_id'] . '">' . $row['buyer_name'] . '</option>';
-
                        }
-
                         ?>
                     </select>
                 </div>
             </div>
 
-
-<!--            <div class="form-group form-group-sm" style="margin-bottom: 20px;">-->
-<!--                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fabric_finish">Day before Delivery<span class="required">*</span></label>-->
-<!--                <div class="col-md-5 col-sm-6 col-xs-12">-->
+            <div class="form-group form-group-sm" style="margin-bottom: 20px;">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fabric_finish">Day before Delivery<span class="required">*</span></label>
+                <div class="col-md-5 col-sm-6 col-xs-12">
+                    <input type="text" id="day_before_delivary" name="day_before_delivary[]" class="form-control" multiple="multiple">
 <!--                    <select id="day_before_delivary" name="day_before_delivary[]"-->
 <!--                            class="form-control select2" multiple="multiple">-->
 <!--                        <option>Select Day before Delivery</option>-->
@@ -75,9 +72,8 @@ $obj->connection();
 //                        }
 //                        ?>
 <!--                    </select>-->
-<!--                </div>-->
-<!--            </div>-->
-
+                </div>
+            </div>
 
             <div class="form-group form-group-sm" id="form-group_for_designation" style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="fabric_type"
@@ -142,19 +138,12 @@ $obj->connection();
                                 <input type="checkbox" name="event_names[]" value=" ' . $row_for_events['event_id'] . ' " > ' . $row_for_events['event_name'] . ' '; ?>
                                 </td>
                              <?php echo "</div>"; ?>
-
                         <?php
                         }
                         ?>
                     </div>
-
                 </div>
-
             </div>
-
-
-
-
 
             <div class="form-group form-group-sm">
                 <div class="col-sm-offset-3 col-sm-5">
@@ -224,7 +213,10 @@ $obj->connection();
                 }
                 if (xmlhttp.readyState == 4) {
                     var data = xmlhttp.responseText;
-                    console.log(data);
+                    // console.log(data);
+                    alert('Successfully Saved');
+                    // success_alert(data, "single_process_create_form.php", "Success!");
+
                     //alert(Successfully Submitted);
                     // if (data == "Feeding panel ID already exists!" || data == "Feeding panel creation is failed!") {
                     //     fail_alert_2(data, "folding_panel_id", "Sorry!");

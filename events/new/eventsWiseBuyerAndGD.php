@@ -85,7 +85,7 @@ if(mysql_num_rows($result)<1)
 //JOIN
 //    buyer b ON b.buyer_id = bp.buyer_id";
 
-                    $sql_for_user_list = "SELECT order_id,o.buyer_id,b.buyer_name,bp.multi_events,
+                    $sql_for_user_list = "SELECT gd,o.buyer_id,b.buyer_name,bp.multi_events,
                     o.gd_creation_date,o.buyer_delivery_date,o.buyer_profile_id,bp.day_before_delivary
                     FROM orders o
                     JOIN
@@ -120,7 +120,7 @@ if(mysql_num_rows($result)<1)
                             ?>
                          <tr>
                             <td><?php echo $s1; ?></td>
-                            <td><?php echo $row['order_id']; ?></td>
+                            <td><?php echo $row['gd']; ?></td>
                             <td><?php echo $row['gd_creation_date']; ?></td>
                             <td><?php echo $row['buyer_delivery_date']; ?></td>
                             <td><?php echo $row['buyer_name']; ?></td>
