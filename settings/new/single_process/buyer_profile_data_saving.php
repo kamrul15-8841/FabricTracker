@@ -15,8 +15,10 @@ $fabric_type = $_POST['fabric_type'];
 $weave_type = $_POST['weave_type'];
 $p_requirement = $_POST['p_requirement'];
 $event_names = $_POST['event_names'];
+$day_before_delivary = $_POST['day_before_delivary'];
 
 $event_names=implode(',',$event_names);
+$day_before_delivary=implode(',',$day_before_delivary);
 
 
 mysqli_query($con,"BEGIN");
@@ -36,7 +38,7 @@ if(mysqli_num_rows($result)>0)
 {
     $data_previously_saved="Yes";
 
-    $insert_sql_statement="update `buyer_profile` set `multi_events`='$event_names'
+    $insert_sql_statement="update `buyer_profile` set `multi_events`='$event_names',`day_before_delivary`='$day_before_delivary'
    where `buyer_id`='$buyer_id' 
                             and `fabric_type`='$fabric_type' 
                             and `weave_type` = '$weave_type'
@@ -49,8 +51,8 @@ if(mysqli_num_rows($result)>0)
 }
 else if( mysqli_num_rows($result) < 1)
 {
-    $insert_sql_statement="insert into `buyer_profile` ( buyer_id, fabric_type, weave_type, p_requirement, multi_events ) 
-                            values ('$buyer_id', '$fabric_type', '$weave_type', '$p_requirement', '$event_names')";
+    $insert_sql_statement="insert into `buyer_profile` ( buyer_id, fabric_type, weave_type, p_requirement, multi_events, day_before_delivary ) 
+                            values ('$buyer_id', '$fabric_type', '$weave_type', '$p_requirement', '$event_names', '$day_before_delivary')";
 
     mysqli_query($con,$insert_sql_statement) or die(mysqli_error($con));
 
