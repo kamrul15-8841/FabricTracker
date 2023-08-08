@@ -42,7 +42,7 @@ $obj->connection();
 
             <div class="form-group form-group-sm" id="form-group_for_buyer" style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="buyer_id"
-                       style="margin-right:0px; color:#00008B;">Buyer:</label>
+                       >Buyer:</label>
                 <div class="col-sm-5">
                     <select class="form-control for_auto_complete" id="buyer_id" name="buyer_id">
                         <option select="selected" value="select">Select Buyer</option>
@@ -50,38 +50,23 @@ $obj->connection();
                         $sql = 'select * from `buyer` order by `buyer_name`';
                         $result = mysqli_query($con, $sql) or die(mysqli_error());
                         while ($row = mysqli_fetch_array($result)) {
-
                            echo '<option value="' . $row['buyer_id'] . '">' . $row['buyer_name'] . '</option>';
-
                        }
-
                         ?>
                     </select>
                 </div>
             </div>
 
-
 <!--            <div class="form-group form-group-sm" style="margin-bottom: 20px;">-->
 <!--                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="fabric_finish">Day before Delivery<span class="required">*</span></label>-->
 <!--                <div class="col-md-5 col-sm-6 col-xs-12">-->
-<!--                    <select id="day_before_delivary" name="day_before_delivary[]"-->
-<!--                            class="form-control select2" multiple="multiple">-->
-<!--                        <option>Select Day before Delivery</option>-->
-<!--                        --><?php
-//                        $sql_event_day = "select total_day from `event_info` order by `event_id`";
-//                        $res_event_day = mysqli_query($con, $sql_event_day) or die(mysqli_error());
-//                        while ($row_event_day = mysqli_fetch_array($res_event_day)) {
-//                            echo "<option value='" . $row_event_day['event_id'] . "'>" . $row_event_day['total_day'] . "</option>";
-//                        }
-//                        ?>
-<!--                    </select>-->
+<!--                    <input type="text" id="day_before_delivary" name="day_before_delivary[]" class="form-control" multiple="multiple">-->
 <!--                </div>-->
 <!--            </div>-->
 
-
             <div class="form-group form-group-sm" id="form-group_for_designation" style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="fabric_type"
-                style="margin-right:0px; color:#00008B;">Fabric Type</label>
+                >Fabric Type</label>
                 <div class="col-sm-5">
                     <select id="fabric_type" class="form-control for_auto_complete" name="fabric_type">
                         <option select="selected" value="select">Select Fabric Type</option>
@@ -100,7 +85,7 @@ $obj->connection();
 
             <div class="form-group form-group-sm"  style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="weave_type"
-                       style="margin-right:0px; color:#00008B;">Weave Type</label>
+                      >Weave Type</label>
                 <div class="col-sm-5">
                     <select id="weave_type" class="form-control for_auto_complete" name="weave_type">
                         <option select="selected" value="select">Select Weave Type</option>
@@ -115,7 +100,7 @@ $obj->connection();
 
             <div class="form-group form-group-sm" id="form-group_for_designation" style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="p_requirement"
-                       style="margin-right:0px; color:#00008B;">Print Requirements</label>
+                       >Print Requirements</label>
                 <div class="col-sm-5">
                     <select id="p_requirement" onchange="details_information()" class="form-control for_auto_complete" name="p_requirement">
                         <option select="selected" value="select">Select Print Requirements</option>
@@ -128,33 +113,53 @@ $obj->connection();
                 </div>
             </div>
 
-            <div class="container" id="details_info">
-                <div class="row" style="text-align: center; margin: 15px 20px;"><strong>Select Events</strong></div>
+            <!-- Assuming you have already established a database connection $con -->
+
+<!--                <div class="form-group form-group-sm" id="form-group_for_multi_events" style="margin-bottom: 20px;">-->
+<!--                    <div class="container" id="multi_events">-->
+<!--                        --><?php
+//                        // Prepared statement to prevent SQL injection
+//                        $sql_for_events = "SELECT event_id, event_name, total_day FROM event_info";
+//                        $result_for_events = mysqli_query($con, $sql_for_events) or die(mysqli_error($con));
+//
+//                        while ($row_for_events = mysqli_fetch_array($result_for_events)) {
+//                            ?>
+<!--                            <div class="col-md-12 form-group form-check" style="text-align: left; margin-left: 15px; padding-left: 20px;">-->
+<!--                                <label>-->
+<!--                                    <input type="checkbox" name="event_names[]" value="--><?php //echo $row_for_events['event_id']; ?><!--">-->
+<!--                                    --><?php //echo $row_for_events['event_name']; ?>
+<!--                                </label>-->
+<!--                                <input type="text" name="event_days[--><?php //echo $row_for_events['event_id']; ?><!--]" placeholder="Event Day">-->
+<!--                            </div>-->
+<!--                            --><?php
+//                        }
+//                        ?>
+<!--                    </div>-->
+<!--                </div>-->
+
+
+
+                        <div class="container" id="details_info">
+                <div class="row" style="text-align: center; margin: 15px 20px;"><strong>Select Events And Days</strong></div>
                 <div class="form-group form-group-sm" id="form-group_for_multi_events" style="margin-bottom: 20px;">
                     <div class="container" id="multi_events">
                         <?php
-                        $sql_for_events = " SELECT * FROM event_info ";
+                        $sql_for_events = " SELECT event_id,event_name,total_day FROM event_info ";
                         $result_for_events = mysqli_query($con, $sql_for_events) or die(mysqli_error($con));
                         while ($row_for_events = mysqli_fetch_array($result_for_events)) { ?>
-
-                             <?php echo '<div class="col-md-3 form-group form-check" style="text-align: left; margin-left: 15px;padding-left: 20px;">';
+                             <?php echo '<div class="col-md-12 form-group form-check" style="text-align: center; margin-left: 15px;padding-left: 20px;">';
                                 echo '<td>
-                                <input type="checkbox" name="event_names[]" value=" ' . $row_for_events['event_id'] . ' " > ' . $row_for_events['event_name'] . ' '; ?>
+                               <input type="checkbox" name="event_names[]" value=" ' . $row_for_events['event_id'] . ' " > ' . $row_for_events['event_name'] . ' '; ?>
+                               <input type="text" id="day_before_delivary" value="<?php echo $row_for_events['total_day']; ?>"
+                                      name="day_before_delivary_<?php echo $row_for_events['event_id']; ?>" ?>
                                 </td>
                              <?php echo "</div>"; ?>
-
                         <?php
                         }
                         ?>
                     </div>
-
                 </div>
-
             </div>
-
-
-
-
 
             <div class="form-group form-group-sm">
                 <div class="col-sm-offset-3 col-sm-5">
@@ -225,6 +230,9 @@ $obj->connection();
                 if (xmlhttp.readyState == 4) {
                     var data = xmlhttp.responseText;
                     console.log(data);
+                    // alert('Successfully Saved');
+                    // success_alert(data, "single_process_create_form.php", "Success!");
+
                     //alert(Successfully Submitted);
                     // if (data == "Feeding panel ID already exists!" || data == "Feeding panel creation is failed!") {
                     //     fail_alert_2(data, "folding_panel_id", "Sorry!");

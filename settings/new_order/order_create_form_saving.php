@@ -9,7 +9,7 @@ $data_insertion_hampering = "No";
 $image_insertion_hampering = "No";
 $error_msg = "";
 
-$order_id = mysqli_real_escape_string($con, stripslashes(trim($_POST['order_id'])));
+$gd = mysqli_real_escape_string($con, stripslashes(trim($_POST['gd'])));
 
 $buyer_id = mysqli_real_escape_string($con, stripslashes(trim($_POST['buyer_id'])));
 
@@ -74,7 +74,7 @@ $sql_for_duplicacy = "
 						 orders
 						 
 						where
-						order_id = '$order_id'
+						gd = '$gd'
 					and buyer_id ='$buyer_id'
 				
 					and style ='$style'
@@ -107,7 +107,7 @@ $result = mysqli_query($con, $sql_for_duplicacy) or die(mysqli_error($con));
 if (mysqli_num_rows($result) > 0) {
 
     $row = mysqli_fetch_assoc($result);
-    $order_id = $row['order_id'];
+    $gd = $row['gd'];
     $buyer_id = $row['buyer_id'];
     $style = $row['style'];
     $color = $row['color'];
@@ -126,7 +126,7 @@ if (mysqli_num_rows($result) > 0) {
     $update_sql_statement = "
                         UPDATE orders 
                         
-                        SET order_id = '$order_id',
+                        SET gd = '$gd',
                         
                         buyer_id ='$buyer_id',
                         
@@ -173,7 +173,7 @@ else {
 					insert into 
 						orders  
 						( 
-                            order_id,
+                            gd,
                             
                             buyer_id,
                             
@@ -204,7 +204,7 @@ else {
 						values 
 
 						( 
-                            '$order_id',
+                            '$gd',
                             
                             '$buyer_id',
                             

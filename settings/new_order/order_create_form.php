@@ -25,34 +25,6 @@ $password = $_SESSION['password'];
 </style>
 
 <script>
-    function buyer_profile_multi_events()
-    {
-        let buyer_id = $("#buyer_id").val();
-
-        if(buyer_id=="select"){
-            return "please select buyer";
-        }
-
-        $.ajax({
-            url: 'settings/new_order/order_events.php',
-            dataType: 'text',
-            type: 'post',
-            contentType: 'application/x-www-form-urlencoded',
-            data: {
-                buyer_id: buyer_id,
-
-            },
-            success: function (data, textStatus, jQxhr) {
-                console.log(data)
-                $("#details_info").html(data);
-            }
-        });
-    }
-
-
-</script>
-
-<script>
 
     function Remove_Value_Of_This_Element(element_name)
     {
@@ -151,18 +123,45 @@ $password = $_SESSION['password'];
         <form class="form-horizontal" action="" style="margin-top:10px;" name="order_info_form" id="order_info_form">
 
             <div class="form-group form-group-sm" id="form-group_for_order_id">
-                <label class="control-label col-sm-3" for="order_id" style="department:#00008B;">Order ID:</label>
+                <label class="control-label col-sm-3" for="gd" style="department:#00008B;">GD :</label>
                 <div class="col-sm-5">
-                    <input type="text" class="form-control" id="order_id" name="order_id" placeholder="Enter Order Id" required>
+                    <input type="text" class="form-control" id="gd" name="gd" placeholder="Enter GD" required>
                 </div>
                 <i class="glyphicon glyphicon-remove" onclick="Remove_Value_Of_This_Element('order_id')"></i>
             </div>
 
+            <div class="form-group form-group-sm" id="form-group_for_country_of_origin">
+                <label class="control-label col-sm-3" for="buyer_profile_id" style="department:#00008B;">Select Buyer Profile:</label>
+                <div class="col-sm-5">
+                    <select  class="form-control add_buyer" id="buyer_profile_id" name="buyer_profile_id"
+                             onchange="SelectValuesFromBuyerProfile(this.value)">
+                        <option select="selected" value="select" disabled'>Select Buyer Profile</option>
+
+                        <?php
+                        //                        $sql = "select * from `buyer_profile`";
+                        $sql = "select buyer_profile_id, buyer_name,fabric_type,weave_type,p_requirement from buyer_profile bp JOIN buyer b on b.buyer_id = bp.buyer_id ORDER BY buyer_profile_id";
+                        $result= mysqli_query($con,$sql) or die(mysqli_error);
+                        while( $row = mysqli_fetch_array( $result))
+//                          $buyer_name =  $row['buyer_name'];
+//                          $weave_type =  $row['weave_type'];
+//                          $fabric_type =  $row['fabric_type'];
+////                          $buyer_profile = $buyer_name.$weave_type.$fabric_type;
+//                          $buyer_profile = $buyer_name =  $row['buyer_name'].$weave_type =  $row['weave_type']. $fabric_type =  $row['fabric_type'];;
+                        {
+                            echo "<option value='" . $row['buyer_profile_id'] . "'>  buyer_name (" . $row['buyer_name'] . "), fabric(" . $row['fabric_type'] ."), weave(" . $row['weave_type'] . "), Req(" . $row['p_requirement'] . ")</option>";
+//                              echo '<option value="'.$row['buyer_profile_id'].'">'.$row['buyer_name'].'_'.$row['fabric_type'].'_'.$row['weave_type'].'_'.$row['p_requirement'].'</option>';
+//                            echo '<option value="'.$row['buyer_profile_id'].'">'.$row['buyer_profile_id'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+
             <div class="form-group form-group-sm" id="form-group_for_buyer">
-                <label class="control-label col-sm-3" for="buyer" style="margin-right:0px; color:#00008B;">Buyer:</label>
+                <label class="control-label col-sm-3" for="buyer">Buyer:</label>
                 <div class="col-sm-5">
                     <!-- Code For Fetching Data from drop-down list From Buyer(table) -->
-                    <select  class="form-control for_auto_complete" onchange="buyer_profile_multi_events()" id="buyer_id" name="buyer_id">
+                    <select  class="form-control for_auto_complete" id="buyer_id" name="buyer_id">
                         <option select="selected" value="select">Select Buyer</option>
                         <?php
                         $buyer_id = $row['buyer_id'];
@@ -183,21 +182,6 @@ $password = $_SESSION['password'];
                     </select><!-- Code For Fetching Data from drop-down list From Buyer(table) -->
                 </div>
             </div> <!-- End of <div class="form-group form-group-sm" id="form-group_for_department"> -->
-
-            <div class="form-group form-group-sm" id="details_info">
-                <label class="control-label col-sm-3" for="buyer_profile_id" style="department:#00008B;">Buyer Profile Id:</label>
-
-<!--                --><?php
-//                $sql_for_events = " SELECT buyer_profile.multi_events
-//                                    FROM `buyer_profile`
-//                                    WHERE buyer_id = '$buyer_id' ";
-//                $result_for_events = mysqli_query($con, $sql_for_events) or die(mysqli_error($con));
-//                while ($row_for_events = mysqli_fetch_array($result_for_events)) {
-//                    echo $row_for_events['multi_events'];
-//                }
-//
-//                ?>
-            </div>
 
 
             <div class="form-group form-group-sm" id="form-group_for_style">
@@ -227,7 +211,7 @@ $password = $_SESSION['password'];
 
             <div class="form-group form-group-sm" id="form-group_for_designation" style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="fabric_type"
-                       style="margin-right:0px; color:#00008B;">Fabric Type</label>
+                       >Fabric Type :</label>
                 <div class="col-sm-5">
                     <select id="fabric_type" class="form-control for_auto_complete" name="fabric_type">
                         <option select="selected" value="select">Select Fabric Type</option>
@@ -245,7 +229,7 @@ $password = $_SESSION['password'];
             </div>
             <div class="form-group form-group-sm"  style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="weave_type"
-                       style="margin-right:0px; color:#00008B;">Weave Type</label>
+                      >Weave Type :</label>
                 <div class="col-sm-5">
                     <select id="weave_type" class="form-control for_auto_complete" name="weave_type">
                         <option select="selected" value="select">Select Weave Type</option>
@@ -260,7 +244,7 @@ $password = $_SESSION['password'];
 
             <div class="form-group form-group-sm" id="form-group_for_designation" style="margin-bottom: 20px;">
                 <label class="control-label col-sm-3" for="p_requirement"
-                       style="margin-right:0px; color:#00008B;">Print Requirements</label>
+                      >Print Requirements :</label>
                 <div class="col-sm-5">
                     <select id="p_requirement" class="form-control for_auto_complete" name="p_requirement">
                         <option select="selected" value="select">Select Print Requirements</option>
@@ -274,7 +258,7 @@ $password = $_SESSION['password'];
             </div>
 
             <div class="form-group form-group-sm" id="form-group_for_p_finish">
-                <label class="control-label col-sm-3" for="p_finish" style="margin-right:0px; color:#00008B;">Performance Finish:</label>
+                <label class="control-label col-sm-3" for="p_finish">Performance Finish :</label>
                 <div class="col-sm-5">
                     <!-- Code For Fetching Data from drop-down list From Buyer(table) -->
                     <select  class="form-control for_auto_complete" id="p_finish" name="p_finish">
@@ -288,18 +272,15 @@ $password = $_SESSION['password'];
             </div> <!-- End of <div class="form-group form-group-sm" id="form-group_for_department"> -->
 
             <div class="form-group form-group-sm" id="form-group_for_location">
-                <label class="control-label col-sm-3" for="fabrics_booking_date" style="department:#00008B;">Fabrics Booking Date
-                    :</label>
+                <label class="control-label col-sm-3" for="fabrics_booking_date" >Fabrics Booking Date :</label>
                 <div class="col-sm-5">
                     <input type="date" class="form-control" id="fabrics_booking_date" name="fabrics_booking_date" placeholder=" Enter Fabrics Booking Date" required>
                 </div>
                 <i class="glyphicon glyphicon-remove" onclick="Remove_Value_Of_This_Element('fabrics_booking_date')"></i>
             </div>
 
-
-
             <div class="form-group form-group-sm" id="form-group_for_location">
-                <label class="control-label col-sm-3" for="buyer_delivery_date" style="department:#00008B;">Buyer Delivery Date:</label>
+                <label class="control-label col-sm-3" for="buyer_delivery_date">Buyer Delivery Date :</label>
                 <div class="col-sm-5">
                     <input type="date" class="form-control" id="buyer_delivery_date" name="buyer_delivery_date" placeholder="Enter Buyer Delivery Date" required>
                 </div>
@@ -307,25 +288,20 @@ $password = $_SESSION['password'];
             </div>
 
             <div class="form-group form-group-sm" id="form-group_for_gd_creation_date">
-                <label class="control-label col-sm-3" for="gd_creation_date" style="department:#00008B;">GD Creation Date:</label>
+                <label class="control-label col-sm-3" for="gd_creation_date" style="department:#00008B;">GD Creation Date :</label>
                 <div class="col-sm-5">
                     <input type="date" class="form-control" id="gd_creation_date" name="gd_creation_date" placeholder="Enter GD Creation Date" required>
                 </div>
                 <i class="glyphicon glyphicon-remove" onclick="Remove_Value_Of_This_Element('gd_creation_date')"></i>
             </div>
 
-
             <div class="form-group form-group-sm" id="form-group_for_lead_time">
-                <label class="control-label col-sm-3" for="lead_time" style="department:#00008B;">Lead Time:</label>
+                <label class="control-label col-sm-3" for="lead_time" style="department:#00008B;">Lead Time :</label>
                 <div class="col-sm-5">
                     <input type="number" class="form-control" id="lead_time" name="lead_time" placeholder="Enter Lead Time" required>
                 </div>
                 <i class="glyphicon glyphicon-remove" onclick="Remove_Value_Of_This_Element('lead_time')"></i>
             </div>
-
-
-
-
 
             <div class="form-group form-group-sm">
                 <div class="col-sm-offset-3 col-sm-5">
@@ -362,6 +338,7 @@ $password = $_SESSION['password'];
                 <tr >
                     <th style="text-align: center">SI</th>
                     <th style="text-align: center">Order Id</th>
+                    <th style="text-align: center">Gd</th>
                     <th style="text-align: center">Buyer Name</th>
                     <th style="text-align: center">Style</th>
                     <th style="text-align: center">Color</th>
@@ -395,6 +372,7 @@ $password = $_SESSION['password'];
                 <tr>
                     <td><?php echo $s1; ?></td>
                     <td><?php echo $row['order_id']; ?></td>
+                    <td><?php echo $row['gd']; ?></td>
                     <td><?php echo $row['buyer_name']; ?></td>
                     <td><?php echo $row['style']; ?></td>
                     <td><?php echo $row['color']; ?></td>
@@ -450,6 +428,42 @@ $password = $_SESSION['password'];
             $(document).ready( function () {
                 $('#datatable-buttons').DataTable();
             } );
+            function SelectValuesFromBuyerProfile(buyer_profile) {
+
+                $.ajax({
+                    url: 'settings/new_order/buyerProfileData.php',
+                    dataType: 'text',
+                    type: 'post',
+                    contentType: 'application/x-www-form-urlencoded',
+                    data: {buyer_profile: buyer_profile},
+                    success: function (data, textStatus, jQxhr) {
+                        alert(data);
+                        const myArray = data.split('?fs?');
+                        //var word = myArray[1];
+
+                        //var stitaching_itemd = myArray[1];
+                        var buyer_id = myArray[1];
+                        var fabric_type = myArray[2];
+                        var weave_type = myArray[3];
+                        var p_requirement = myArray[4];
+
+                        document.getElementById('buyer_id').value = buyer_id;
+                        // document.getElementById('cutting_length').readOnly = true;
+
+                        document.getElementById('fabric_type').value = fabric_type;
+                        document.getElementById('weave_type').value = weave_type;
+                        document.getElementById('p_requirement').value = p_requirement;
+                        // document.getElementById('width').readOnly = true;
+
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        //console.log( errorThrown );
+                        alert(errorThrown);
+                    }
+                });
+                onchange = "width_meter_change(this.value)"
+            }
+
         </script>
 
     </div> <!-- End of <div class="panel panel-default"> -->

@@ -38,4 +38,11 @@ function Event_wise_buyer_Form_Validation()
         return false;
     }
 
+    else if(document.getElementById("day_before_delivary").value.trim()=="")
+    {
+        alert("Please Select day_before_delivary");
+        document.getElementById("day_before_delivary").focus();
+        return false;
+    }
+
 }

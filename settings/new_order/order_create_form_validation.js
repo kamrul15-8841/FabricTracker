@@ -8,6 +8,13 @@ function Order_Form_Validation()
         document.getElementById("buyer_id").focus();
         return false;
     }
+
+    if(document.getElementById("gd").value.trim()=="")
+    {
+        alert("Please Provide gd");
+        document.getElementById("gd").focus();
+        return false;
+    }
     else if(document.getElementById("style").value.trim()=="")
     {
         alert("Please Provide Style Name");
